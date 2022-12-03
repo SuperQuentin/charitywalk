@@ -5,9 +5,11 @@ import { trpc } from "../utils/trpc";
 import MapComponent from "../components/MapComponent";
 import { fromLonLat } from "ol/proj";
 import type { Coordinate } from 'ol/coordinate';
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import DefaultLayout from "../components/layouts/DefaultLayout";
+import { NextPageWithLayout } from "./_app";
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
   const [runners, setRunners] = useState<Coordinate[]>([]);
@@ -24,7 +26,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
 				<link rel="stylesheet" href="/ol.css"></link>
       </Head>
-      <main className="flex items-center">
+      <div className="flex items-center w-full">
         <MapComponent runners={runners}/>
         <button className="p-1 bg-orange-700" onClick={() => {
           setRunners([...runners, [6.562901, 46.519885]]); // EPFL position decalé
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
             {runners.map(runner => (<li key={runner[0]}>{`${runner[0]};${runner[1]}`}</li>))}
           </ul>
         </div>
-      </main>
+      </div>
     </>
   );
 };
