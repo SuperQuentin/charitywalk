@@ -15,6 +15,7 @@ const config = {
   },
   images: {
     domains: ["images.unsplash.com"],
-  }
+  },
+  ignoreDuringBuilds: true,
 };
 export default config;
