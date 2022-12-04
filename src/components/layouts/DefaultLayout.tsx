@@ -60,7 +60,7 @@ const DefaultLayout = ({ children }: { children: ReactElement }) => {
                     </div>
                 </div>
             </nav>
-            <main className="flex min-h-screen flex-col items-center justify-center">
+            <main className="flex flex-col items-center justify-center">
                 {children}
             </main>
         </>
