@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { router, publicProcedure } from "../trpc";
 
 export const userRouter = router({
   getAllAccount: publicProcedure.query(async ({ ctx }) => {
