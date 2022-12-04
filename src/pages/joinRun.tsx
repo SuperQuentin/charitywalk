@@ -6,8 +6,6 @@ import { trpc } from "../utils/trpc";
 import { useSession } from "next-auth/react";
 
 
-const events = trpc.event.getAll.useQuery();
-
 const JoinRun: NextPageWithLayout = () => {
 
 	const events = trpc.event.getAll.useQuery();
