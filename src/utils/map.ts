@@ -38,7 +38,10 @@ const currPath =
 
 export const getRouteFromCoordinates = (coordinates: Coordinate[]) => {
 	//return new LineString(coordinates).transform('EPSG:4326', 'EPSG:3857');
-	return new LineString(currPath).transform('EPSG:4326', 'EPSG:3857'); //temp
+	for (let i = 0; i < coordinates.length; ++i) {
+		coordinates[i] = fromLonLat(coordinates[i]);
+	}
+	return new LineString(coordinates); //temp
 }
 
 export const getPolylineFromCoordinates = (coordinates: Coordinate[]) => {
