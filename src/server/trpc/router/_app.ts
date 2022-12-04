@@ -1,3 +1,4 @@
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { router } from "../trpc";
 import { authRouter } from "./auth";
 import { eventRouter } from "./event";

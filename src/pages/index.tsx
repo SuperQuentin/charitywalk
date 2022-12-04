@@ -10,74 +10,74 @@ import type { NextPageWithLayout } from "./_app";
 import type { Runner, Event, Route } from '../types/interfaces';
 
 // ROUTES
-const routeA: Route = { waypoints: []};
-const routeB: Route = { waypoints: []};
-routeA.waypoints.push([ 6.563129, 46.518873 ])
-routeA.waypoints.push([ 6.563261, 46.518873 ])
-routeA.waypoints.push([ 6.563588, 46.519104 ])
-routeA.waypoints.push([ 6.563583, 46.519121 ])
-routeA.waypoints.push([ 6.563635, 46.519156 ])
-routeA.waypoints.push([ 6.563662, 46.519157 ])
-routeA.waypoints.push([ 6.563685, 46.519172 ])
-routeA.waypoints.push([ 6.563684, 46.519191 ])
-routeA.waypoints.push([ 6.563736, 46.519227 ])
-routeA.waypoints.push([ 6.56377, 46.519227 ])
-routeA.waypoints.push([ 6.563856, 46.519296 ])
-routeA.waypoints.push([ 6.563939, 46.519298 ])
-routeA.waypoints.push([ 6.564141, 46.519452 ])
-routeA.waypoints.push([ 6.564177, 46.519479 ])
-routeA.waypoints.push([ 6.564176, 46.519596 ])
-routeA.waypoints.push([ 6.564195, 46.519607 ])
-routeA.waypoints.push([ 6.564229, 46.519608 ])
-routeA.waypoints.push([ 6.564285, 46.519591 ])
-routeA.waypoints.push([ 6.564371, 46.51965 ])
-routeA.waypoints.push([ 6.564368, 46.519687 ])
-routeA.waypoints.push([ 6.564398, 46.519707 ])
-routeA.waypoints.push([ 6.564409, 46.519699 ])
-routeA.waypoints.push([ 6.564493, 46.51976 ])
-routeA.waypoints.push([ 6.564474, 46.519771 ])
-routeA.waypoints.push([ 6.564384, 46.519754 ])
-routeA.waypoints.push([ 6.564316, 46.519793 ])
-routeA.waypoints.push([ 6.564251, 46.519798 ])
-routeA.waypoints.push([ 6.564213, 46.519815 ])
-routeA.waypoints.push([ 6.564234, 46.519848 ])
-routeA.waypoints.push([ 6.564242, 46.519925 ])
-routeA.waypoints.push([ 6.564189, 46.519984 ])
-routeA.waypoints.push([ 6.564191, 46.520271 ])
-routeB.waypoints.push([ 6.564408, 46.520272 ])
-routeB.waypoints.push([ 6.564649, 46.520274 ])
-routeB.waypoints.push([ 6.565115, 46.520278 ])
-routeB.waypoints.push([ 6.565406, 46.520283 ])
-routeB.waypoints.push([ 6.565057, 46.522062 ])
-routeB.waypoints.push([ 6.564618, 46.522094 ])
-routeB.waypoints.push([ 6.564482, 46.522114 ])
-routeB.waypoints.push([ 6.564453, 46.522119 ])
-routeB.waypoints.push([ 6.564288, 46.522145 ])
-routeB.waypoints.push([ 6.564237, 46.522045 ])
-routeB.waypoints.push([ 6.564195, 46.521998 ])
-routeB.waypoints.push([ 6.564152, 46.521963 ])
-routeB.waypoints.push([ 6.564204, 46.52189 ])
-routeB.waypoints.push([ 6.564072, 46.521843 ])
-routeB.waypoints.push([ 6.564009, 46.521835 ])
-routeB.waypoints.push([ 6.563739, 46.521818 ])
-routeB.waypoints.push([ 6.563488, 46.521806 ])
-routeB.waypoints.push([ 6.563361, 46.521777 ])
-routeB.waypoints.push([ 6.56332, 46.521759 ])
-routeB.waypoints.push([ 6.563288, 46.521745 ])
-routeB.waypoints.push([ 6.563179, 46.521666 ])
-routeB.waypoints.push([ 6.563134, 46.521612 ])
-routeB.waypoints.push([ 6.563055, 46.521498 ])
-routeB.waypoints.push([ 6.562976, 46.521355 ])
-routeB.waypoints.push([ 6.562955, 46.5213 ])
-routeB.waypoints.push([ 6.562898, 46.521201 ])
-routeB.waypoints.push([ 6.562889, 46.521186 ])
-routeB.waypoints.push([ 6.562507, 46.520545 ])
-routeB.waypoints.push([ 6.562454, 46.520452 ])
-routeB.waypoints.push([ 6.562396, 46.520352 ])
-routeB.waypoints.push([ 6.562319, 46.520361 ])
-routeB.waypoints.push([ 6.562248, 46.520251 ])
-routeB.waypoints.push([ 6.562012, 46.519815 ])
-routeB.waypoints.push([ 6.561582, 46.519058 ])
+const routeA: Route = { waypoints: [] };
+const routeB: Route = { waypoints: [] };
+routeA.waypoints.push([6.563129, 46.518873])
+routeA.waypoints.push([6.563261, 46.518873])
+routeA.waypoints.push([6.563588, 46.519104])
+routeA.waypoints.push([6.563583, 46.519121])
+routeA.waypoints.push([6.563635, 46.519156])
+routeA.waypoints.push([6.563662, 46.519157])
+routeA.waypoints.push([6.563685, 46.519172])
+routeA.waypoints.push([6.563684, 46.519191])
+routeA.waypoints.push([6.563736, 46.519227])
+routeA.waypoints.push([6.56377, 46.519227])
+routeA.waypoints.push([6.563856, 46.519296])
+routeA.waypoints.push([6.563939, 46.519298])
+routeA.waypoints.push([6.564141, 46.519452])
+routeA.waypoints.push([6.564177, 46.519479])
+routeA.waypoints.push([6.564176, 46.519596])
+routeA.waypoints.push([6.564195, 46.519607])
+routeA.waypoints.push([6.564229, 46.519608])
+routeA.waypoints.push([6.564285, 46.519591])
+routeA.waypoints.push([6.564371, 46.51965])
+routeA.waypoints.push([6.564368, 46.519687])
+routeA.waypoints.push([6.564398, 46.519707])
+routeA.waypoints.push([6.564409, 46.519699])
+routeA.waypoints.push([6.564493, 46.51976])
+routeA.waypoints.push([6.564474, 46.519771])
+routeA.waypoints.push([6.564384, 46.519754])
+routeA.waypoints.push([6.564316, 46.519793])
+routeA.waypoints.push([6.564251, 46.519798])
+routeA.waypoints.push([6.564213, 46.519815])
+routeA.waypoints.push([6.564234, 46.519848])
+routeA.waypoints.push([6.564242, 46.519925])
+routeA.waypoints.push([6.564189, 46.519984])
+routeA.waypoints.push([6.564191, 46.520271])
+routeB.waypoints.push([6.564408, 46.520272])
+routeB.waypoints.push([6.564649, 46.520274])
+routeB.waypoints.push([6.565115, 46.520278])
+routeB.waypoints.push([6.565406, 46.520283])
+routeB.waypoints.push([6.565057, 46.522062])
+routeB.waypoints.push([6.564618, 46.522094])
+routeB.waypoints.push([6.564482, 46.522114])
+routeB.waypoints.push([6.564453, 46.522119])
+routeB.waypoints.push([6.564288, 46.522145])
+routeB.waypoints.push([6.564237, 46.522045])
+routeB.waypoints.push([6.564195, 46.521998])
+routeB.waypoints.push([6.564152, 46.521963])
+routeB.waypoints.push([6.564204, 46.52189])
+routeB.waypoints.push([6.564072, 46.521843])
+routeB.waypoints.push([6.564009, 46.521835])
+routeB.waypoints.push([6.563739, 46.521818])
+routeB.waypoints.push([6.563488, 46.521806])
+routeB.waypoints.push([6.563361, 46.521777])
+routeB.waypoints.push([6.56332, 46.521759])
+routeB.waypoints.push([6.563288, 46.521745])
+routeB.waypoints.push([6.563179, 46.521666])
+routeB.waypoints.push([6.563134, 46.521612])
+routeB.waypoints.push([6.563055, 46.521498])
+routeB.waypoints.push([6.562976, 46.521355])
+routeB.waypoints.push([6.562955, 46.5213])
+routeB.waypoints.push([6.562898, 46.521201])
+routeB.waypoints.push([6.562889, 46.521186])
+routeB.waypoints.push([6.562507, 46.520545])
+routeB.waypoints.push([6.562454, 46.520452])
+routeB.waypoints.push([6.562396, 46.520352])
+routeB.waypoints.push([6.562319, 46.520361])
+routeB.waypoints.push([6.562248, 46.520251])
+routeB.waypoints.push([6.562012, 46.519815])
+routeB.waypoints.push([6.561582, 46.519058])
 
 const routes = [routeA, routeB];
 
@@ -88,7 +88,7 @@ const REFRESH_RUNNERS_MS = 3000;
 const TEMP_WEIGHT = .001;
 
 for (let i = 0; i < 10; ++i) {
-  DUMMY_RUNNERS.push({id: i, latestTrackpoint: [6.561901 + Math.random() * TEMP_WEIGHT, 46.518885 + Math.random() * TEMP_WEIGHT], firstname:"firstname" + i, lastname:"lastname" + i});
+  DUMMY_RUNNERS.push({ id: i, latestTrackpoint: [6.561901 + Math.random() * TEMP_WEIGHT, 46.518885 + Math.random() * TEMP_WEIGHT], firstname: "firstname" + i, lastname: "lastname" + i });
 }
 const Home: NextPageWithLayout = () => {
   const [runners, setRunners] = useState<Runner[]>([]);
@@ -103,9 +103,9 @@ const Home: NextPageWithLayout = () => {
         INNER JOIN public."Account" ON public."Account"."id" = public."Trackpoint"."accountId"
         INNER JOIN public."User" ON public."User"."id" = public."Account"."userId"`
       }).then(res => res.json())
-      .then(res => {
-        setAccounts(res);
-      })
+        .then(res => {
+          setAccounts(res);
+        })
     }, REFRESH_RUNNERS_MS)
   }, []);
 
@@ -117,7 +117,7 @@ const Home: NextPageWithLayout = () => {
     }*/
 
     const updatedRunners: Runner[] = [];
-  
+
     for (let i = 0; i < accounts.length; ++i) {
       const currentRunner: Runner = {};
       currentRunner.id = accounts[i].userId;
@@ -140,10 +140,10 @@ const Home: NextPageWithLayout = () => {
         <title>Marchadon</title>
         <meta name="description" content="Lauzhack marchadon" />
         <link rel="icon" href="/favicon.ico" />
-				<link rel="stylesheet" href="/ol.css"></link>
+        <link rel="stylesheet" href="/ol.css"></link>
       </Head>
       <div className="flex flex-col items-center w-full">
-        <MapComponent runners={runners} routes={routes}/>
+        <MapComponent runners={runners} routes={routes} />
       </div>
     </>
   );
