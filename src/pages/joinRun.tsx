@@ -3,39 +3,36 @@ import DefaultLayout from "../components/layouts/DefaultLayout";
 import type { NextPageWithLayout } from "./_app";
 import Image from "next/image";
 import { trpc } from "../utils/trpc";
+import { useSession } from "next-auth/react";
+
 
 const events = trpc.event.getAll.useQuery();
 
 const JoinRun: NextPageWithLayout = () => {
 
-	const runs = [
-		{ id: 0, eventName: "Amnesty international", date: "15 décembre 2021", img: "/trek1.jpeg", runDistance: 12, startPos: "Yverdon", endPos: "Yvonand" },
-		{ id: 1, eventName: "Amnesty international", date: "8 novembre 2021", img: "/trek1.jpeg", runDistance: 22, startPos: "Yverdon", endPos: "Estavayer" },
-		{ id: 2, eventName: "La croix rouge", date: "3 août 2022", img: "/trek2.jpeg", runDistance: 30, startPos: "Morat", endPos: "Morat" }
-	]
+	const events = trpc.event.getAll.useQuery();
 
-	const data = runs.map((run) => (
-		<div key={run.id} className="relative z-0 col-span-2 aspect-video rounded-3xl">
+	const registerMutation = trpc.event.register.useMutation();
 
-			<div className="absolute inset-0 -z-30 w-full h-full">
-				<div className="absolute inset-0 bg-gradient-to-t -z-10 from-black to-transparent via-transparent rounded-3xl" />
-				<Image src={run.img} alt="" className="absolute -z-20 inset-0 rounded-3xl" layout="fill" objectFit="cover" />
-			</div>
+	const handleRegister = async (userId, eventId, routeId) => {
+		await registerMutation.mutateAsync({
+			userId,
+			eventId,
+			routeId,
+		});
+	};
 
-			<div className="py-4 px-6 w-full h-full flex flex-col-reverse justify-between items-end">
-				<div className="flex w-full justify-between items-center">
-					<div className="text-white text-xl font-bold">Sample text</div>
-					<button className="bg-violet-50 select-none px-3 py-2 rounded-3xl hover:bg-violet-600 hover:text-white transition">Join this run</button>
-				</div>
-				<div className="flex bg-white px-3 py-1 max-w-fit rounded-full">
-					<div className="font-bold">
-						{run.date}
-					</div>
-				</div>
-			</div>
+	const session = useSession();
 
-		</div>
-	));
+	if (events.error) {
+		return <div>error</div>;
+	}
+
+	if (events.status !== "success") {
+		return <div>loading</div>;
+	}
+
+	const { data } = events;
 
 	return (
 		<div className="max-w-7xl w-full">
@@ -43,11 +40,43 @@ const JoinRun: NextPageWithLayout = () => {
 				<h1 className="mt-2 ml-2 mb-4 text-3xl font-bold">Join a run from an event</h1>
 
 				<div className="flex md:grid flex-col w-full grid-cols-6 gap-6">
-					{data}
-				</div>
-			</section>
+					{
+						data.map((event) => {
+							return (
+								<div key={event.id} className="relative z-0 col-span-2 aspect-video rounded-3xl">
 
-		</div>
+									<div className="absolute inset-0 -z-30 w-full h-full">
+										<div className="absolute inset-0 bg-gradient-to-t -z-10 from-black to-transparent via-transparent rounded-3xl" />
+										<Image src={"https://images.unsplash.com/photo-1600284536251-8bb98db53468?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"} alt="" className="absolute -z-20 inset-0 rounded-3xl" layout="fill" objectFit="cover" />
+									</div>
+
+									<div className="py-4 px-6 w-full h-full flex flex-col-reverse justify-between items-end">
+										<div className="flex w-full justify-between items-center">
+											<div className="text-white text-xl font-bold h-fit"><div className="text-violet-400">{event.organisation}</div> {event.name}</div>
+
+
+											{
+												session.status === "authenticated" ? (
+
+													<button onClick={() => handleRegister(session.data.user?.id, event.id, event.routes.at(0))} disabled={registerMutation.isLoading} className="bg-violet-50 select-none px-3 py-2 rounded-3xl hover:bg-violet-600 hover:text-white transition">Join this run</button>
+												) : (<></>)
+											}
+										</div>
+										<div className="flex bg-white px-3 py-1 max-w-fit rounded-full">
+											<div className="font-bold">
+												{event.date.toLocaleDateString()}
+											</div>
+										</div>
+									</div>
+
+								</div>
+							)
+						})
+					}
+				</div>
+			</section >
+
+		</div >
 	)
 }
 
