@@ -1,8 +1,19 @@
+import { Feature } from 'ol';
 import type { Coordinate } from 'ol/coordinate';
+
+export interface Sponsor {
+	name: string;
+	moneyPerKilometer: number;
+	sponsoring: Runner[];
+}
 
 export interface Runner {
 	id: number;
-	trackpoints: Coordinate[];
+	firstname: string;
+	lastname: string;
+	latestTrackpoint: Coordinate;
+	feature: Feature;
+	sponsoredBy: Sponsor[];
 }
 
 export interface Event {
