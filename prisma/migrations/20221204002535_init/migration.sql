@@ -1,4 +1,7 @@
 -- CreateExtension
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- CreateExtension
 CREATE EXTENSION IF NOT EXISTS "postgis" WITH VERSION "3.3.2";
 
 -- CreateTable
@@ -85,11 +88,72 @@ CREATE TABLE "Sponsorship" (
     CONSTRAINT "Sponsorship_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Account" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
+
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL,
+    "sessionToken" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "image" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "VerificationToken" (
+    "identifier" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL
+);
+
 -- CreateIndex
 CREATE INDEX "waypoint_idx" ON "Waypoint" USING GIST ("coords");
 
 -- CreateIndex
 CREATE INDEX "trackpoint_idx" ON "Trackpoint" USING GIST ("coords");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- AddForeignKey
 ALTER TABLE "Waypoint" ADD CONSTRAINT "Waypoint_routeId_fkey" FOREIGN KEY ("routeId") REFERENCES "Route"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -113,10 +177,16 @@ ALTER TABLE "Entries" ADD CONSTRAINT "Entries_routeId_fkey" FOREIGN KEY ("routeI
 ALTER TABLE "Entries" ADD CONSTRAINT "Entries_lastKnownPositionId_fkey" FOREIGN KEY ("lastKnownPositionId") REFERENCES "Trackpoint"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Trackpoint" ADD CONSTRAINT "Trackpoint_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Trackpoint" ADD CONSTRAINT "Trackpoint_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Account"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Sponsorship" ADD CONSTRAINT "Sponsorship_sponsorId_fkey" FOREIGN KEY ("sponsorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Sponsorship" ADD CONSTRAINT "Sponsorship_entriesId_fkey" FOREIGN KEY ("entriesId") REFERENCES "Entries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
