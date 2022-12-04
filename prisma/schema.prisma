@@ -47,11 +47,11 @@ model Event {
   name         String
   date         DateTime
   location     String
-  isArchived   Boolean
-  isCancel     Boolean
+  isArchived   Boolean          @default(false)
+  isCancel     Boolean          @default(false)
   organisation String
-  cancelReason String
-  isRunning    Boolean
+  cancelReason String?
+  isRunning    Boolean          @default(false)
   routes       RoutesOnEvents[]
   entries      Entries[]
 
