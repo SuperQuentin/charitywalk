@@ -133,43 +133,6 @@ const Home: NextPageWithLayout = () => {
     // refresh degeulasse
     setRunners([...updatedRunners]);
   }, [accounts]);
-  const [stupidRefresh, setStupidRefresh] = useState<boolean>(false);
-
-  const accounts = trpc.user.getAllAccount.useQuery();
-
-  useEffect(() => {
-    // Fetch runners periodically
-    setInterval(async () => {
-      setStupidRefresh((tamaman) => !tamaman);
-      // Simulate database update
-      /*for (let i = 0; i < DUMMY_RUNNERS.length; ++i) {
-        DUMMY_RUNNERS[i].latestTrackpoint[0] += (Math.random() - .5) * TEMP_WEIGHT;
-        DUMMY_RUNNERS[i].latestTrackpoint[1] += (Math.random() - .5) * TEMP_WEIGHT;
-      }*/
-
-      const updatedRunners: Runner[] = [];
-
-      const acc = await accounts.refetch();
-
-      for (let i = 0; i < acc.data?.length; ++i) {
-        const currentRunner: Runner = {};
-        currentRunner.id = acc.data[i].userId;
-        currentRunner.firstname = acc.data[i]?.firstname;
-        currentRunner.lastname = acc.data[i]?.lastname;
-        const atPos = acc.data[i]?.email.indexOf("@");
-        currentRunner.firstname = acc.data[i]?.email?.substring(0, atPos);
-        currentRunner.lastname = acc.data[i]?.email?.substring(atPos + 1);
-        currentRunner.latestTrackpoint = acc.data[i].st_aslatlontext;
-        currentRunner.latestTrackpoint = currentRunner.latestTrackpoint.split(" ");
-        currentRunner.latestTrackpoint.reverse();
-
-        updatedRunners.push(currentRunner);
-      }
-
-      // refresh degeulasse
-      setRunners([...updatedRunners]);
-    }, REFRESH_RUNNERS_MS);
-  }, []);
 
   return (
     <>

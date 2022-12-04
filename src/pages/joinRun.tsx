@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DefaultLayout from "../components/layouts/DefaultLayout";
 import type { NextPageWithLayout } from "./_app";
 import Image from "next/image";
@@ -7,8 +7,22 @@ import { useSession } from "next-auth/react";
 
 
 const JoinRun: NextPageWithLayout = () => {
+	const [events, setEvents] = useState<any[]>([]);
 
-	const events = trpc.event.getAll.useQuery();
+	fetch("/api/sql", {
+		method: "POST",
+		body: `SELECT * FROM public."Event", public."RoutesOnEvents", public."Route"
+		WHERE public."RoutesOnEvents"."eventId" = public."Event"."id"
+		AND public."RoutesOnEvents"."routeId" = public."Route"."id"`
+	 }).then(res => res.json())
+	 .then(res => {
+		console.log(res);
+		setEvents(res);
+	 })
+
+	 useEffect(() => {
+		//console.log(events);
+	 }, [events]);
 
 	const registerMutation = trpc.event.register.useMutation();
 
@@ -22,16 +36,6 @@ const JoinRun: NextPageWithLayout = () => {
 
 	const session = useSession();
 
-	if (events.error) {
-		return <div>error</div>;
-	}
-
-	if (events.status !== "success") {
-		return <div>loading</div>;
-	}
-
-	const { data } = events;
-
 	return (
 		<div className="max-w-7xl w-full">
 			<section className="flex px-4 md:px-0 flex-col min-h-screen pt-28">
@@ -39,7 +43,7 @@ const JoinRun: NextPageWithLayout = () => {
 
 				<div className="flex md:grid flex-col w-full grid-cols-6 gap-6">
 					{
-						data.map((event) => {
+						events.map((event) => {
 							return (
 								<div key={event.id} className="relative z-0 col-span-2 aspect-video rounded-3xl">
 
@@ -62,7 +66,7 @@ const JoinRun: NextPageWithLayout = () => {
 										</div>
 										<div className="flex bg-white px-3 py-1 max-w-fit rounded-full">
 											<div className="font-bold">
-												{event.date.toLocaleDateString()}
+												{(new Date(event.date)).toLocaleDateString()}
 											</div>
 										</div>
 									</div>

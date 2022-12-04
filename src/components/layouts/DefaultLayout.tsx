@@ -47,8 +47,8 @@ const DefaultLayout = ({ children }: { children: ReactElement }) => {
                                 session ?
                                     (
                                         <>
-                                            <div>Signed in as {session.user?.email}</div>
-                                            <button className="px-3 py-2 bg-red-300 rounded-full hover:bg-red-500 text-red-800 delay-[25] transition font-bold" onClick={() => signOut()} >Logout</button>
+                                            <Link href="/track" className="px-3 py-2 bg-neutral-300 rounded-3xl hover:bg-neutral-500 text-neutral-800 delay-75 transition font-bold hover:text-violet-100">Track</Link>
+                                            <button className="px-3 py-2 bg-red-300 rounded-full hover:bg-red-500 text-red-800 delay-[25] transition font-bold hover:text-violet-100" onClick={() => signOut()} >Logout</button>
                                         </>
 
                                     ) : (
