@@ -4,11 +4,9 @@ import type { NextPageWithLayout } from "./_app";
 import Image from "next/image";
 import { trpc } from "../utils/trpc";
 
+const events = trpc.event.getAll.useQuery();
+
 const JoinRun: NextPageWithLayout = () => {
-
-	const events = trpc.event.getAll.useQuery();
-
-	console.log(events);
 
 	const runs = [
 		{ id: 0, eventName: "Amnesty international", date: "15 décembre 2021", img: "/trek1.jpeg", runDistance: 12, startPos: "Yverdon", endPos: "Yvonand" },

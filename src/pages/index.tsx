@@ -90,21 +90,49 @@ const TEMP_WEIGHT = .001;
 for (let i = 0; i < 10; ++i) {
   DUMMY_RUNNERS.push({id: i, latestTrackpoint: [6.561901 + Math.random() * TEMP_WEIGHT, 46.518885 + Math.random() * TEMP_WEIGHT], firstname:"firstname" + i, lastname:"lastname" + i});
 }
-
 const Home: NextPageWithLayout = () => {
   const [runners, setRunners] = useState<Runner[]>([]);
+  const [accounts, setAccounts] = useState<any[]>([]);
+
+  // Fetch runners periodically
+  useEffect(() => {
+    setInterval(() => {
+      fetch("/api/sql", {
+        method: "POST",
+        body: `SELECT DISTINCT ST_AsLatLonText(coords, 'D.DDDD'), "userId", name, email FROM public."Trackpoint"
+        INNER JOIN public."Account" ON public."Account"."id" = public."Trackpoint"."accountId"
+        INNER JOIN public."User" ON public."User"."id" = public."Account"."userId"`
+      }).then(res => res.json())
+      .then(res => {
+        setAccounts(res);
+      })
+    }, REFRESH_RUNNERS_MS)
+  }, []);
 
   useEffect(() => {
-    // Fetch runners periodically
-    setInterval(() => {
-      // Simulate database update
-      for (let i = 0; i < DUMMY_RUNNERS.length; ++i) {
-        DUMMY_RUNNERS[i].latestTrackpoint[0] += (Math.random() - .5) * TEMP_WEIGHT;
-        DUMMY_RUNNERS[i].latestTrackpoint[1] += (Math.random() - .5) * TEMP_WEIGHT;
-      }
-      setRunners([...DUMMY_RUNNERS]);
-    }, REFRESH_RUNNERS_MS);
-  }, []);
+    // Simulate database update
+    /*for (let i = 0; i < DUMMY_RUNNERS.length; ++i) {
+      DUMMY_RUNNERS[i].latestTrackpoint[0] += (Math.random() - .5) * TEMP_WEIGHT;
+      DUMMY_RUNNERS[i].latestTrackpoint[1] += (Math.random() - .5) * TEMP_WEIGHT;
+    }*/
+
+    const updatedRunners: Runner[] = [];
+  
+    for (let i = 0; i < accounts.length; ++i) {
+      const currentRunner: Runner = {};
+      currentRunner.id = accounts[i].userId;
+      currentRunner.firstname = accounts[i].name.split(" ")[0];
+      currentRunner.lastname = accounts[i].name.split(" ")[1];
+      currentRunner.latestTrackpoint = accounts[i].st_aslatlontext;
+      currentRunner.latestTrackpoint = currentRunner.latestTrackpoint.split(" ");
+      currentRunner.latestTrackpoint.reverse();
+
+      updatedRunners.push(currentRunner);
+    }
+
+    // refresh degeulasse
+    setRunners([...updatedRunners]);
+  }, [accounts]);
 
   return (
     <>
@@ -128,7 +156,5 @@ Home.getLayout = function getLayout(page: ReactElement) {
     </DefaultLayout>
   )
 }
-
-
 
 export default Home;

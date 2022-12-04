@@ -226,7 +226,7 @@ const MapComponent = ({ runners, routes } : IMapComponentProps) => {
 							setFocusedRunner(runner);
 							flyTo(fromLonLat(runner.latestTrackpoint));
 						}}>
-							{runner.id} {runner.firstname} {runner.lastname}
+							{runner.firstname} {runner.lastname}
 						</div>
 					))}
 				</div>
@@ -237,7 +237,7 @@ const MapComponent = ({ runners, routes } : IMapComponentProps) => {
 				<div className='overflow-auto min-w-[250px] max-h-80 fixed bg-violet-50 right-0 rounded-md drop-shadow-2xl' style={{"right": "10px", "top": "200px"}}>
 					<div className='p-[10px] font-bold border-b-2 border-black'>Stats of runner</div>
 					<div className="p-[10px] hover:bg-violet-500 cursor-pointer select-none" onClick={() => {setFocusedRunnerId(null); setFocusedRunner(null);}}>Stop following</div>
-					<div className='p-[10px]'>[{focusedRunner?.id}] {focusedRunner?.firstname} {focusedRunner?.lastname}</div>
+					<div className='p-[10px]'>{focusedRunner?.firstname} {focusedRunner?.lastname}</div>
 				</div>
 			}
 
