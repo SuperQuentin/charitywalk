@@ -90,19 +90,43 @@ const TEMP_WEIGHT = .001;
 for (let i = 0; i < 10; ++i) {
   DUMMY_RUNNERS.push({id: i, latestTrackpoint: [6.561901 + Math.random() * TEMP_WEIGHT, 46.518885 + Math.random() * TEMP_WEIGHT], firstname:"firstname" + i, lastname:"lastname" + i});
 }
-
 const Home: NextPageWithLayout = () => {
   const [runners, setRunners] = useState<Runner[]>([]);
+  const [stupidRefresh, setStupidRefresh] = useState<boolean>(false);
+
+  const accounts = trpc.user.getAllAccount.useQuery();
 
   useEffect(() => {
     // Fetch runners periodically
-    setInterval(() => {
+    setInterval(async () => {
+      setStupidRefresh((tamaman) => !tamaman);
       // Simulate database update
-      for (let i = 0; i < DUMMY_RUNNERS.length; ++i) {
+      /*for (let i = 0; i < DUMMY_RUNNERS.length; ++i) {
         DUMMY_RUNNERS[i].latestTrackpoint[0] += (Math.random() - .5) * TEMP_WEIGHT;
         DUMMY_RUNNERS[i].latestTrackpoint[1] += (Math.random() - .5) * TEMP_WEIGHT;
+      }*/
+
+      const updatedRunners: Runner[] = [];
+
+      const acc = await accounts.refetch();
+    
+      for (let i = 0; i < acc.data?.length; ++i) {
+        const currentRunner: Runner = {};
+        currentRunner.id = acc.data[i].userId;
+        currentRunner.firstname = acc.data[i]?.firstname;
+        currentRunner.lastname = acc.data[i]?.lastname;
+        const atPos = acc.data[i]?.email.indexOf("@");
+        currentRunner.firstname = acc.data[i]?.email?.substring(0, atPos);
+        currentRunner.lastname = acc.data[i]?.email?.substring(atPos + 1);
+        currentRunner.latestTrackpoint = acc.data[i].st_aslatlontext;
+        currentRunner.latestTrackpoint = currentRunner.latestTrackpoint.split(" ");
+        currentRunner.latestTrackpoint.reverse();
+
+        updatedRunners.push(currentRunner);
       }
-      setRunners([...DUMMY_RUNNERS]);
+
+      // refresh degeulasse
+      setRunners([...updatedRunners]);
     }, REFRESH_RUNNERS_MS);
   }, []);
 
