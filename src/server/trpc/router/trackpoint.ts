@@ -4,6 +4,30 @@ import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
 
 export const trackpointRouter = router({
+  getLatestUserTrackpoint: publicProcedure.input(z.string())
+  .query(async ({ ctx, input }) => {
+    
+    const account = await ctx.prisma.account.findFirst({
+      where: {
+        userId: input
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    const trackpoint = await ctx.prisma.trackpoint.findFirst({
+      where: {
+        accountId: account?.id
+      },
+      orderBy: {
+        timestamp: 'desc'
+      }
+    })
+
+    return trackpoint;
+  }),
+
   create: publicProcedure.input(z.object({
     timestamp: z.number(),
     lat: z.number(),

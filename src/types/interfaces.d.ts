@@ -8,7 +8,7 @@ export interface Sponsor {
 }
 
 export interface Runner {
-	id: number;
+	id: string;
 	firstname: string;
 	lastname: string;
 	latestTrackpoint: Coordinate;
